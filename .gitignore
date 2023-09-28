@@ -1,2 +1,5 @@
 # Jetbrains Folder
 .idea
+
+# Virtual Environment Folder
+/services/backend/env

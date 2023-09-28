@@ -15,3 +15,9 @@
 - Maybe directly load data from an .json file instead of placing in into the Code section
 - Maybe provide simple Vue template
 - Maybe start server with hot reloading: "npm run serve --hot"
+
+# Part 3
+- It is a bit cumbersome to copy all of it again
+- Maybe explicitly show and explain, how to select an env
+- Maybe mention the difference of the source command and selecting an env in PyCharm
+- Mention Flask and Werkzeug conflict

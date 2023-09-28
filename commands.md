@@ -34,3 +34,28 @@ npm install plotly.js
 
 npm run serve
 
+# Part 3
+
+PRESS: "CTRL + C"
+
+mkdir services
+mkdir services/frontend
+mkdir services/backend
+
+find ./example-project/hello-world -exec mv -n {} ./services/frontend \;
+rm -rf ./example-project/hello-world
+rm -rf ./example-project
+cd /services/frontend
+npm install
+
+cd ../backend
+python -m venv env
+source env/bin/activate
+(pip list)
+pip install flask==2.1.1 pip install flask-restx==0.5.1 pip install werkzeug=2.1.2
+(pip list)
+
+mkdir src
+
+python app.py run
+curl -X GET http://127.0.0.1:5000/ping
