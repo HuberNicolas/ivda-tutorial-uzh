@@ -7,3 +7,11 @@
 - Small typo (App.Vue instead of App.vue)
 - Renaming "HelloWorld.vue" Component to "ConfigurationPanel.vue" did not break the code for me
 - Color is not quite correct
+
+# Part 2
+- Could install plotly w/o root
+- Small: After installing, it is not indicated to start the server again
+- Maybe not use inline styles (I'm not a Vue-expert)
+- Maybe directly load data from an .json file instead of placing in into the Code section
+- Maybe provide simple Vue template
+- Maybe start server with hot reloading: "npm run serve --hot"

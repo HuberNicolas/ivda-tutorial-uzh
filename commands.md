@@ -18,10 +18,19 @@ cd hello-world
 npm install
 
 npm run serve
-    - AFTER 30seconds, press: "CRL + C"
+    - AFTER 30seconds, press: "CTRL + C"
 
 vue add vuetify
     - PRESS "y"
     - SELECT 5TH OPTION "Vuetify 3 - Vue CLI (preview)"
 
 npm run serve
+
+# Part 2
+
+PRESS: "CTRL + C"
+
+npm install plotly.js
+
+npm run serve
+
