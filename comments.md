@@ -26,3 +26,10 @@
 - Maybe use docker instead of installing mongo and mongo-express
 - It is not companies.json but main_company.json
 - Maybe mention that we could also use something like sqlite?
+
+# Part 5
+- not sure if we should keep the v-card
+
+# Part 6
+- mention separation of imports (e.g., request)
+- mention cors error

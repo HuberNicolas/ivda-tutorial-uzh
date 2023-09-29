@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
 from flask_restx import Resource, Api
 from flask_pymongo import PyMongo
@@ -16,9 +16,18 @@ pymongo = PyMongo(app)
 companies: Collection = pymongo.db.companies
 api = Api(app)
 class CompaniesList(Resource):
-      def get(self):
-          cursor = companies.find()
-          return [Company(**doc).to_json() for doc in cursor]
+    def get(self, args=None):
+        # retrieve the arguments and convert to a dict
+        args = request.args.to_dict()
+        print(args)
+        # If the user specified category is "All" we retrieve all companies
+        if args['category'] == 'All':
+            cursor = companies.find()
+        # In any other case, we only return the companies where the category applies
+        else:
+            cursor = companies.find(args)
+        # we return all companies as json
+        return [Company(**doc).to_json() for doc in cursor]
 class Companies(Resource):
       def get(self, id):
           cursor = companies.find_one_or_404({"id": id})
