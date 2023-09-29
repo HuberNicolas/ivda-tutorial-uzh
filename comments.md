@@ -36,4 +36,6 @@
 
 # Part 7
 - async fetchData() is a '}' missing
--  
+
+# Part 9
+- do you mean sidebar? "Make a decision on the design that visually highlights the configuration panel."

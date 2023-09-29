@@ -1,10 +1,16 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <h2>Example Project</h2>
+      <v-container fluid>
+        <v-row justify="center">
+          <v-col>
+            <h2 class="text-h2">Nicolas Huber - 16-936-205</h2>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-app-bar>
     <v-main>
-      <ConfigurationPanel/>
+      <ConfigurationPanel />
     </v-main>
   </v-app>
 </template>
@@ -28,10 +34,17 @@ export default {
 <style>
 /* disable scrolling */
 html {
-  scrollbar-width: none; /* For Firefox */
-  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  scrollbar-width: none;
+  /* For Firefox */
+  -ms-overflow-style: none;
+  /* For Internet Explorer and Edge */
 }
+
 html::-webkit-scrollbar {
-  width: 0px; /* For Chrome, Safari, and Opera */
+  width: 0px;
+  /* For Chrome, Safari, and Opera */
+}
+h2 {
+  text-align: center;
 }
 </style>

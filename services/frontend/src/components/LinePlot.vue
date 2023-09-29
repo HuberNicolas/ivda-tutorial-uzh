@@ -44,7 +44,26 @@ export default {
         type: 'scatter'
       };
       var data = [trace1];
-      var layout = {}
+      var layout = {
+        xaxis: {
+          title: {
+            text: 'Year',
+            font: {
+              size: 18,
+              color: '#7f7f7f'
+            }
+          },
+        },
+        yaxis: {
+          title: {
+            text: 'Profit',
+            font: {
+              size: 18,
+              color: '#7f7f7f'
+            }
+          }
+        }
+      }
       var config = { responsive: true, displayModeBar: false }
       Plotly.newPlot('myLinePlot', data, layout, config);
     }

@@ -2,7 +2,7 @@
   <div>
     <v-container fluid>
       <v-row>
-        <v-col cols="12" md="2" class="sideBar">
+        <v-col cols="12" md="2" class="sideBar bg-blue-darken-3">
           <v-row>
             <v-col cols="12" sm="12">
               <div class="control-panel-font">Company Overview</div>
@@ -32,14 +32,14 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col cols="12" md="5">
+        <v-col cols="12" md="5" class="plot-area bg-blue-accent-1">
           <ScatterPlot :key="scatterPlotId" :selectedCategory="categories.selectedValue"
             @changeCurrentlySelectedCompany="changeCurrentlySelectedCompany" />
         </v-col>
-        <v-col cols="12" md="5">
+        <v-col cols="12" md="5" class="plot-area bg-blue-accent-1">
           <LinePlot :key="linePlotId" :selectedCompany="companies.selectedValue"
             :selectedAlgorithm="algorithm.selectedValue" />
-        </v-col>ß
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -94,9 +94,9 @@ export default {
 }
 
 .sideBar {
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-  background: #fafafa;
-  padding-left: 17px;
+  height: calc(100vh - 50px);
+}
+.plot-area {
   height: calc(100vh - 50px);
 }
 </style>
