@@ -9,3 +9,6 @@
 
 # MongoDB
 /data/mongodb/mongodb-data
+
+# VSCode Config Folder
+.vscode/settings.json

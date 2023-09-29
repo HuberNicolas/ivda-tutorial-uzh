@@ -64,3 +64,6 @@ curl -X GET http://127.0.0.1:5000/ping
 
 pip install fastapi flask_pymongo pymongo flask_cors
 deactivate # or conda deactivate
+
+# Part 8
+pip install pandas statsmodels
