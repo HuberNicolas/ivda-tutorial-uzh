@@ -21,3 +21,8 @@
 - Maybe explicitly show and explain, how to select an env
 - Maybe mention the difference of the source command and selecting an env in PyCharm
 - Mention Flask and Werkzeug conflict
+
+# Part 4
+- Maybe use docker instead of installing mongo and mongo-express
+- It is not companies.json but main_company.json
+- Maybe mention that we could also use something like sqlite?

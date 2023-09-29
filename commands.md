@@ -59,3 +59,8 @@ mkdir src
 
 python app.py run
 curl -X GET http://127.0.0.1:5000/ping
+
+# Part 4
+
+pip install fastapi flask_pymongo pymongo flask_cors
+deactivate # or conda deactivate

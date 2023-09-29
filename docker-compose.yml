@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  mongodb:
+    container_name: mongodb
+    build:
+      context: ./data/mongodb
+      dockerfile: dev.Dockerfile  
+    restart: always
+    ports:
+      - "27017:27017"
+    env_file:
+      - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    volumes:
+      - ./data/mongodb/mongodb-data:/data/db # to have access to the mongodb-data
+      - ./data/mongodb/mock-data/init.js:/docker-entrypoint-initdb.d/init.js # to create the initial data
+      - ./data/mongodb/mock-data/main_company.json:/docker-entrypoint-initdb.d/main_company.json # to create the initial data
+    networks:
+      - ivda_db_network
+
+  mongo-express:
+    container_name: mongo-express
+    build:
+      context: ./data/mongodb/mongo-express
+      dockerfile: dev.Dockerfile
+    restart: always
+    ports:
+      - 8081:8081
+    env_file:
+      - .env
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${ME_CONFIG_MONGODB_ADMINUSERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${ME_CONFIG_MONGODB_ADMINPASSWORD}
+      ME_CONFIG_BASICAUTH_USERNAME: ${ME_CONFIG_BASICAUTH_USERNAME}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${ME_CONFIG_BASICAUTH_PASSWORD}
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_URL: mongodb://mongodb:27017
+    depends_on:
+      - mongodb
+    networks:
+      - ivda_db_network
+
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+# docker network create ivda_db_network
+networks:
+  ivda_db_network:
+    external: true
