@@ -33,3 +33,7 @@
 # Part 6
 - mention separation of imports (e.g., request)
 - mention cors error
+
+# Part 7
+- async fetchData() is a '}' missing
+-  

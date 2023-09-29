@@ -33,7 +33,8 @@
           </v-row>
         </v-col>
         <v-col cols="12" md="5">
-          <ScatterPlot :key="scatterPlotId" :selectedCategory="categories.selectedValue" />
+          <ScatterPlot :key="scatterPlotId" :selectedCategory="categories.selectedValue"
+            @changeCurrentlySelectedCompany="changeCurrentlySelectedCompany" />
         </v-col>
         <v-col cols="12" md="5">
           <LinePlot :key="linePlotId" :selectedCompany="companies.selectedValue"
@@ -73,7 +74,11 @@ export default {
     },
     changeAlgorithm() {
       this.linePlotId += 1
-    }
+    },
+    changeCurrentlySelectedCompany(companyId) {
+      this.companies.selectedValue = companyId
+      this.changeCompany()
+    },
   }
 }
 </script>
