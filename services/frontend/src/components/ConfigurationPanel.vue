@@ -21,7 +21,7 @@
           </v-row>
           <v-row>
             <v-col cols="12" sm="12">
-              <v-select :items="companies.values" label="Select a company" dense v-model="companies.selectedValue"
+              <v-select :items="companies.items" label="Select a company" dense v-model="companies.selectedValue" item-title="name" item-value="id"
                 @change="changeCompany"></v-select>
             </v-col>
           </v-row>
@@ -57,7 +57,7 @@ export default {
       selectedValue: 'All'
     },
     companies: {
-      values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+      items: [],
       selectedValue: 1
     },
     algorithm: {
@@ -65,7 +65,23 @@ export default {
       selectedValue: 'none'
     }
   }),
+  mounted() {
+    this.fetchData()
+  },
   methods: {
+    async fetchData() {
+      // req URL to retrieve all companies from backend
+      var reqUrl = 'http://127.0.0.1:5000/companies'
+      console.log("ReqURL " + reqUrl)
+      // await response and data
+      const response = await fetch(reqUrl)
+      const responseData = await response.json();
+      this.companies.items = responseData.map(company => ({
+        // https://dev.vuetifyjs.com/en/api/v-select/
+         id: company.id,
+         name: company.name
+      }));
+    },
     changeCategory() {
       this.scatterPlotId += 1
     },
@@ -96,6 +112,7 @@ export default {
 .sideBar {
   height: calc(100vh - 50px);
 }
+
 .plot-area {
   height: calc(100vh - 50px);
 }

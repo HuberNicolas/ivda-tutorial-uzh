@@ -20,8 +20,11 @@ class CompaniesList(Resource):
         # retrieve the arguments and convert to a dict
         args = request.args.to_dict()
         print(args)
+        # If the user does not specify any category we retrieve all companies
+        if args == {}:
+            cursor = companies.find()
         # If the user specified category is "All" we retrieve all companies
-        if args['category'] == 'All':
+        elif args['category'] == 'All':
             cursor = companies.find()
         # In any other case, we only return the companies where the category applies
         else:

@@ -17,7 +17,12 @@ export default {
     "selectedCategory"
   ],
   data: () => ({
-    ScatterPlotData: { x: [], y: [], name: [] },
+    ScatterPlotData: { x: [], y: [], name: [], category: [], color: [] },
+    categoryColors: {
+      tech: '#66c2a5',
+      health: '#fc8d62',
+      bank: '#8da0cb',
+    }
   }),
   mounted() {
     this.fetchData()
@@ -36,7 +41,10 @@ export default {
         this.ScatterPlotData.name.push(company.name)
         this.ScatterPlotData.x.push(company.founding_year)
         this.ScatterPlotData.y.push(company.employees)
+        this.ScatterPlotData.category.push(company.category)
+        this.ScatterPlotData.color.push(this.categoryColors[company.category] || '#000');
       })
+      console.log(this.ScatterPlotData)
       // after the data is loaded, draw the plot
       this.drawScatterPlot()
     },
@@ -48,7 +56,7 @@ export default {
         type: 'scatter',
         text: this.ScatterPlotData.name,
         marker: {
-          color: 'black',
+          color: this.ScatterPlotData.color,
           size: 12
         }
       };
@@ -109,6 +117,9 @@ export default {
     selectedCategory: function () {
       this.ScatterPlotData.x = [];
       this.ScatterPlotData.y = [];
+      this.ScatterPlotData.name = [];
+      this.ScatterPlotData.category = [];
+      this.ScatterPlotData.color = [];
 
       this.fetchData();
     }

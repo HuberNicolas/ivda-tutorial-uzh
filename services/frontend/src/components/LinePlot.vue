@@ -38,12 +38,53 @@ export default {
       this.drawLinePlot()
     },
     drawLinePlot() {
-      var trace1 = {
-        x: this.LinePlotData.x,
-        y: this.LinePlotData.y,
-        type: 'scatter'
-      };
-      var data = [trace1];
+      var data = [];
+
+      // Check if the selected algorithm is 'none'
+      if (this.selectedAlgorithm === "none") {
+        
+        data = [{
+          x: this.LinePlotData.x,
+          y: this.LinePlotData.y,
+          name: 'Profit per Year',
+          type: 'scatter'
+        }];
+      } else {
+        // Add a scatter plot with markers for all points except the last one
+        data.push({
+          x: this.LinePlotData.x.slice(1), // Exclude the first and second point
+          y: this.LinePlotData.y.slice(1), // Exclude the first and second point
+          name: 'Profit per Year',
+          type: 'scatter',
+          mode: 'lines+markers',
+          line: {
+            width: 2,
+          },
+          marker: {
+            size: 6,
+          }
+        });
+
+        // Add the last 2 points with special formatting (line and marker)
+        data.push({
+          x: this.LinePlotData.x.slice(0,2), // Last and second last points
+          y: this.LinePlotData.y.slice(0,2), // Last and second last points
+          name: 'Predicted Profit Year',
+          type: 'scatter',
+          mode: 'lines+markers',
+          line: {
+            width: 2,
+            color: 'red', // Line color for the last point
+            dash: 'dot'
+          },
+          marker: {
+            size: 10,
+            color: 'red' // Marker color for the last point
+          }
+        });
+        
+      }
+
       var layout = {
         xaxis: {
           title: {
