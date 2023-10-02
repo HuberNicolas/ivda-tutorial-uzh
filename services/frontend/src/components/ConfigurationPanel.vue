@@ -35,6 +35,7 @@
         <v-col cols="12" md="5" class="plot-area bg-blue-accent-1">
           <ScatterPlot :key="scatterPlotId" :selectedCategory="categories.selectedValue"
             @changeCurrentlySelectedCompany="changeCurrentlySelectedCompany" />
+          <BarPlot :key="barPlotId" :selectedCompany="companies.selectedValue" />
         </v-col>
         <v-col cols="12" md="5" class="plot-area bg-blue-accent-1">
           <LinePlot :key="linePlotId" :selectedCompany="companies.selectedValue"
@@ -47,11 +48,13 @@
 <script>
 import ScatterPlot from './ScatterPlot';
 import LinePlot from './LinePlot';
+import BarPlot from './BarPlot.vue';
 export default {
-  components: { ScatterPlot, LinePlot },
+  components: { ScatterPlot, LinePlot, BarPlot },
   data: () => ({
     scatterPlotId: 0,
     linePlotId: 1,
+    barPlotId: 0,
     categories: {
       values: ['All', 'tech', 'health', 'bank'],
       selectedValue: 'All'
@@ -87,6 +90,7 @@ export default {
     },
     changeCompany() {
       this.linePlotId += 1
+      this.barPlotId += 1
     },
     changeAlgorithm() {
       this.linePlotId += 1
