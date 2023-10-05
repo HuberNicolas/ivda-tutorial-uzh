@@ -28,14 +28,20 @@
 - Maybe mention that we could also use something like sqlite?
 
 # Part 5
-- not sure if we should keep the v-card
+- Not sure if we should keep the v-card
 
 # Part 6
-- mention separation of imports (e.g., request)
-- mention cors error
+- Mention separation of imports (e.g., request)
+- Mention cors error (better use Chrome)
 
 # Part 7
-- async fetchData() is a '}' missing
+- Async fetchData() is a '}' missing
 
 # Part 9
-- do you mean sidebar? "Make a decision on the design that visually highlights the configuration panel."
+- What do you mean sidebar? "Make a decision on the design that visually highlights the configuration panel."
+
+# Additional Feedback
+- It would be nice to have some part of the tutorial regarding Vue styling; most useful would I find a short section about the management of the components: How do I divide the screen into meaningful parts (e.g., command- vs. plotarea)
+- Maybe we could dockerize everything?
+- It would be nice to have a short introduction to Postman: It would speed up the development between the Front- and Backend-teams
+- We used SQLite as DB. Maybe just include a link to other DB systems.
