@@ -10,7 +10,8 @@
 </template>
 
 <script>
-import Plotly from 'plotly.js/dist/plotly';
+import Plotly from 'plotly.js-dist-min';
+import { API_URL } from '@/api';
 export default {
   name: "LinePlot",
   props: ["selectedCompany", "selectedAlgorithm"],
@@ -23,7 +24,7 @@ export default {
   methods: {
     async fetchData() {
       // req URL to retrieve single company from backend
-      var reqUrl = 'http://127.0.0.1:5000/companies/' + this.$props.selectedCompany +
+      var reqUrl = API_URL + '/companies/' + this.$props.selectedCompany +
         '?algorithm=' + this.$props.selectedAlgorithm
       console.log("ReqURL " + reqUrl)
       // await response and data

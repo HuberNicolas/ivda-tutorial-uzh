@@ -10,7 +10,8 @@
 </template>
 
 <script>
-import Plotly from 'plotly.js/dist/plotly';
+import Plotly from 'plotly.js-dist-min';
+import { API_URL } from '@/api';
 export default {
   name: "BarPlot",
   props: ["selectedCompany"],
@@ -25,7 +26,7 @@ export default {
   methods: {
     async fetchData() {
       // req URL to retrieve single company from backend
-      var reqUrl = 'http://127.0.0.1:5000/companies'
+      var reqUrl = API_URL + '/companies'
       console.log("ReqURL " + reqUrl)
       // await response and data
       const response = await fetch(reqUrl)
@@ -47,18 +48,17 @@ export default {
       this.drawBarPlot()
     },
     drawBarPlot() {
-      var data = [];
-      data = [{
+      var data = [{
         x: this.BarPlotData.x,
         y: this.BarPlotData.y,
-        name: 'Employees per Company in' + this.selectedCategory,
+        name: 'Employees per Company in ' + this.selectedCategory,
         type: 'bar'
       }];
 
       var layout = {
         xaxis: {
           title: {
-            text: 'Employees',
+            text: 'Company',
             font: {
               size: 18,
               color: '#7f7f7f'
@@ -67,7 +67,7 @@ export default {
         },
         yaxis: {
           title: {
-            text: 'Company',
+            text: 'Employees',
             font: {
               size: 18,
               color: '#7f7f7f'
@@ -81,8 +81,8 @@ export default {
   },
   watch: {
     selectedCompany() {
-      this.LinePlotData.x = [];
-      this.LinePlotData.y = [];
+      this.BarPlotData.x = [];
+      this.BarPlotData.y = [];
       this.fetchData();
     },
   },

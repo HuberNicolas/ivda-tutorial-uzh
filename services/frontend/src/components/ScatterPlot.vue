@@ -10,14 +10,15 @@
 </template>
 
 <script>
-import Plotly from 'plotly.js/dist/plotly';
+import Plotly from 'plotly.js-dist-min';
+import { API_URL } from '@/api';
 export default {
   name: "ScatterPlot",
   props: [
     "selectedCategory"
   ],
   data: () => ({
-    ScatterPlotData: { x: [], y: [], name: [], category: [], color: [] },
+    ScatterPlotData: { x: [], y: [], id: [], name: [], category: [], color: [] },
     categoryColors: {
       tech: '#66c2a5',
       health: '#fc8d62',
@@ -30,7 +31,7 @@ export default {
   methods: {
     async fetchData() {
       // req URL to retrieve companies from backend
-      var reqUrl = 'http://127.0.0.1:5000/companies?category=' + this.$props.selectedCategory
+      var reqUrl = API_URL + '/companies?category=' + this.$props.selectedCategory
       console.log('ReqURL ' + reqUrl)
       // await response and data
       const response = await fetch(reqUrl)
@@ -38,6 +39,7 @@ export default {
 
       // transform data to usable by scatterplot
       responseData.forEach((company) => {
+        this.ScatterPlotData.id.push(company.id)
         this.ScatterPlotData.name.push(company.name)
         this.ScatterPlotData.x.push(company.founding_year)
         this.ScatterPlotData.y.push(company.employees)
@@ -96,11 +98,12 @@ export default {
           pn = data.points[i].pointNumber;
 
           // emit event to change the currently selected company in the a) configuration panel
-          // and b) update the Profit View
-          that.$emit('changeCurrentlySelectedCompany', pn + 1)
+          // and b) update the Profit View; use the company id, not the point index,
+          // because a filtered category does not start at id 1
+          that.$emit('changeCurrentlySelectedCompany', that.ScatterPlotData.id[pn])
 
-          // revert all colors
-          var colors = ['#00000' * 15]
+          // revert all colors to the category colors
+          var colors = [...that.ScatterPlotData.color]
 
           // and change currently selected color to blue
           colors[pn] = '#3777ee';
@@ -116,6 +119,7 @@ export default {
   watch: {
     selectedCategory: function () {
       this.ScatterPlotData.x = [];
+      this.ScatterPlotData.id = [];
       this.ScatterPlotData.y = [];
       this.ScatterPlotData.name = [];
       this.ScatterPlotData.category = [];

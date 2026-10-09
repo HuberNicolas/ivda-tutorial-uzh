@@ -10,8 +10,8 @@
           </v-row>
           <v-row>
             <v-col cols="12" sm="12">
-              <v-select :items="categories.values" label="Select a category" dense v-model="categories.selectedValue"
-                @change="changeCategory"></v-select>
+              <v-select :items="categories.values" label="Select a category" density="compact" v-model="categories.selectedValue"
+                @update:model-value="changeCategory"></v-select>
             </v-col>
           </v-row>
           <v-row>
@@ -21,14 +21,14 @@
           </v-row>
           <v-row>
             <v-col cols="12" sm="12">
-              <v-select :items="companies.items" label="Select a company" dense v-model="companies.selectedValue" item-title="name" item-value="id"
-                @change="changeCompany"></v-select>
+              <v-select :items="companies.items" label="Select a company" density="compact" v-model="companies.selectedValue" item-title="name" item-value="id"
+                @update:model-value="changeCompany"></v-select>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" sm="12">
-              <v-select :items="algorithm.values" label="Select an algorithm for prediction" dense
-                v-model="algorithm.selectedValue" @change="changeAlgorithm"></v-select>
+              <v-select :items="algorithm.values" label="Select an algorithm for prediction" density="compact"
+                v-model="algorithm.selectedValue" @update:model-value="changeAlgorithm"></v-select>
             </v-col>
           </v-row>
         </v-col>
@@ -46,9 +46,10 @@
   </div>
 </template>
 <script>
-import ScatterPlot from './ScatterPlot';
-import LinePlot from './LinePlot';
+import ScatterPlot from './ScatterPlot.vue';
+import LinePlot from './LinePlot.vue';
 import BarPlot from './BarPlot.vue';
+import { API_URL } from '@/api';
 export default {
   components: { ScatterPlot, LinePlot, BarPlot },
   data: () => ({
@@ -74,7 +75,7 @@ export default {
   methods: {
     async fetchData() {
       // req URL to retrieve all companies from backend
-      var reqUrl = 'http://127.0.0.1:5000/companies'
+      var reqUrl = API_URL + '/companies'
       console.log("ReqURL " + reqUrl)
       // await response and data
       const response = await fetch(reqUrl)
