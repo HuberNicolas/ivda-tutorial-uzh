@@ -1,3 +1,7 @@
+> [!NOTE]
+> The commands I ran while working through the tutorial in September 2023, kept as a record.
+> They follow the 2023 setup (Vue CLI, local MongoDB, virtualenv). For the current setup see the [README](README.md#quick-start).
+
 # Part 0
 
 node -v
