@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/backend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+      - run: uvx ruff check .
+      - run: uvx ruff format --check .
+      - run: uv sync --locked
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/frontend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: services/frontend/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+
+  compose:
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    steps:
+      - uses: actions/checkout@v5
+      - run: docker compose --profile tools up -d --build --wait
+      - name: Smoke test
+        run: |
+          curl -fsS http://localhost:5001/ping
+          test "$(curl -fsS 'http://localhost:5001/companies?category=bank' | jq length)" = 5
+          curl -fsS 'http://localhost:5001/companies/1?algorithm=regression' | jq -e '.profit[0].year == 2022'
+          curl -fsS -o /dev/null http://localhost:8080/
+          curl -fsS -o /dev/null -u mongo-express-user:mongo-express-user-pw http://localhost:8081/
+      - if: failure()
+        run: docker compose --profile tools logs
+      - if: always()
+        run: docker compose --profile tools down -v
