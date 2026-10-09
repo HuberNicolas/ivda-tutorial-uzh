@@ -11,4 +11,4 @@
 /data/mongodb/mongodb-data
 
 # VSCode Config Folder
-.vscode/settings.json
+.vscode/settings.json/services/backend/.venv

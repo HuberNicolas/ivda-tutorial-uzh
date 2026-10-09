@@ -1,18 +1,11 @@
-console.log("MongoDB server init.js file");
-// Connect to the MongoDB server
-conn = new Mongo();
+// Runs once, when MongoDB starts with an empty data volume.
+// Loads the mock companies from main_company.json into the "companies" collection.
+const fs = require("fs");
 
-// Specify the database to use (e.g., "companiesdatabase")
-// here, companiesdatabase is hardcoded and not loaded from .env file
-db = conn.getDB("companiesdatabase");
+const dbName = process.env.MONGO_INITDB_DATABASE || "companiesdatabase";
+const companiesDb = db.getSiblingDB(dbName);
 
-// Load data from the main_company.json file directly into a variable
-var fs = require('fs');
-var jsonData = fs.readFileSync('/docker-entrypoint-initdb.d/main_company.json', 'utf8');
+const data = JSON.parse(fs.readFileSync("/docker-entrypoint-initdb.d/main_company.json", "utf8"));
+companiesDb.companies.insertMany(data);
 
-var data = JSON.parse(jsonData);
-
-// Insert the data into the "companies" collection
-db.companies.insert(data);
-
-console.log("Data from main_company.json inserted successfully.");
+print(`Inserted ${data.length} companies into ${dbName}.companies`);

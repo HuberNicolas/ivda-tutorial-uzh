@@ -1,0 +1,59 @@
+name: ivda-tutorial
+
+services:
+  mongodb:
+    image: mongo:8.0.15
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE:-companiesdatabase}
+    ports:
+      - "${MONGO_PORT:-27017}:27017"
+    volumes:
+      - mongodb-data:/data/db
+      # Seed scripts run once, on the first start with an empty volume
+      - ./data/mongodb/mock-data/init.js:/docker-entrypoint-initdb.d/init.js:ro
+      - ./data/mongodb/mock-data/main_company.json:/docker-entrypoint-initdb.d/main_company.json:ro
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build: ./services/backend
+    restart: unless-stopped
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/${MONGO_INITDB_DATABASE:-companiesdatabase}
+    ports:
+      - "${BACKEND_PORT:-5001}:5000"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./services/frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:5001}
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    depends_on:
+      - backend
+
+  mongo-express:
+    image: mongo-express:1.0.2-20-alpine3.19
+    profiles: ["tools"]
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongodb:27017
+      ME_CONFIG_BASICAUTH_USERNAME: ${ME_CONFIG_BASICAUTH_USERNAME:-mongo-express-user}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${ME_CONFIG_BASICAUTH_PASSWORD:-mongo-express-user-pw}
+    ports:
+      - "${MONGO_EXPRESS_PORT:-8081}:8081"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+volumes:
+  mongodb-data:
